@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -118,10 +118,39 @@ function BasicTable() {
               <TableCell align="right">{row.protein}</TableCell>
             </TableRow>
           ))} */}
+          {/* <ItemCell></ItemCell> */}
         </TableBody>
       </Table>
     </TableContainer>
   );
+}
+
+const ItemCell: React.FC<{ item: UFItem; }> = (props) =>
+(
+  <TableRow
+    key={"a"}
+    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+  >
+    <TableCell component="th" scope="row">
+      {props.item.name}
+    </TableCell>
+    <TableCell align="right">{props.item.price}</TableCell>
+    <TableCell align="right">{props.item.stock_remaining}</TableCell>
+    <TableCell align="right">{props.item.order_limit}</TableCell>
+  </TableRow>
+);
+
+async function get_all_stocks(): Promise<UFItem[]>
+{
+  let results: UFItem[] = [];
+  const events = await get_events();
+  for (const event of events) {
+    const stocks = await get_stocks(event.id);
+    for (const stock of stocks) {
+      results.push(stock)
+    }
+  }
+  return results;
 }
 
 function ButtonAppBar() {
