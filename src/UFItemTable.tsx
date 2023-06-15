@@ -7,16 +7,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { UFItem } from './UFGoodsOrderType';
-import { get_events, get_stocks } from './UFGoodsOrderAPI';
+import { get_stocks_from_my_aws } from './UFGoodsOrderAPI';
 
-function get_all_items(on_get_items: (items: UFItem[]) => void)
+function get_all_items_from_my_aws(on_get_items: (items: UFItem[]) => void)
 {
-  get_events(events => {
-    events.forEach(event => {
-      get_stocks(event.id, items => {
-        on_get_items(items);
-      });
-    });
+  get_stocks_from_my_aws(items => {
+    on_get_items(items);
   });
 }
 
@@ -24,7 +20,7 @@ export const UFItemTable = () => {
   const [items, setItems] = useState<UFItem[]>([]);
 
   React.useEffect(() => {
-    get_all_items(newItems => {
+    get_all_items_from_my_aws(newItems => {
       setItems([...items, ...newItems]);
     });
   }, []);

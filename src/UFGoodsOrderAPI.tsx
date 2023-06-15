@@ -21,3 +21,12 @@ export function get_stocks(event_id: number, on_completed: (items: UFItem[]) => 
     on_completed(events);
   });  
 }
+
+export function get_stocks_from_my_aws(on_completed: (items: UFItem[]) => void) {
+  const url = 'https://u643btk3c7.execute-api.ap-northeast-1.amazonaws.com/default/get-current-all-items';
+
+  axios.post<UFItem[]>(url).then(response => {
+    const events = response.data;
+    on_completed(response.data);
+  });
+}
