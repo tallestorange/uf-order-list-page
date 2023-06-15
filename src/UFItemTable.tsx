@@ -28,7 +28,7 @@ export const UFItemTable = () => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>商品名</TableCell>
@@ -41,7 +41,6 @@ export const UFItemTable = () => {
             {items.map(item => (
               <TableRow
               key={item.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {item.name}
