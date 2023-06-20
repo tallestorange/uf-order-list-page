@@ -24,10 +24,7 @@ function App() {
   }, [items]);
 
   useEffect(() => {
-    setItems([]);
-    get_stocks_from_my_aws(newItems => {
-      setItems([...items, ...newItems]);
-    });
+    update_table();
   }, []);
 
   return (
