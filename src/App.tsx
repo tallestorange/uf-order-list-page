@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useReducer } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,15 +10,28 @@ import { get_stocks_from_my_aws } from './UFGoodsOrderAPI';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
 
+interface IAction {
+  type: string;
+  value?: UFItem[];
+}
+
+const reducer = (state: UFItem[], action: IAction) => {
+  if (action.type === "reset") {
+      return [];
+  }
+  const result: UFItem[] = [...state, ...action.value!];
+  return result;
+};
+
 function App() {
-  const [items, setItems] = useState<UFItem[]>([]);
+  const [items, setItems] = useReducer(reducer, []);
   const [updateDisabled, setUpdateDisabled] = useState<boolean>(false);
 
   const update_table = useCallback(() => {
     setUpdateDisabled(true);
-    setItems([]);
+    setItems({type: "reset", value: []});
     get_stocks_from_my_aws(newItems => {
-      setItems([...items, ...newItems]);
+      setItems({type: "", value: newItems});
       setUpdateDisabled(false);
     });
   }, [items]);
