@@ -16,13 +16,13 @@ function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               UFGoodsOrder在庫数チェック
             </Typography>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
             >
               <RefreshIcon />
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Toolbar />
