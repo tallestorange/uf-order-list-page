@@ -12,10 +12,14 @@ import IconButton from '@mui/material/IconButton';
 
 function App() {
   const [items, setItems] = useState<UFItem[]>([]);
+  const [updateDisabled, setUpdateDisabled] = useState<boolean>(false);
+
   const update_table = useCallback(() => {
+    setUpdateDisabled(true);
     setItems([]);
     get_stocks_from_my_aws(newItems => {
       setItems([...items, ...newItems]);
+      setUpdateDisabled(false);
     });
   }, [items]);
 
@@ -39,6 +43,7 @@ function App() {
               edge="start"
               color="inherit"
               onClick={update_table}
+              disabled={updateDisabled}
             >
               <RefreshIcon />
             </IconButton>
