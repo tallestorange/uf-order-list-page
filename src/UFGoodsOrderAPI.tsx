@@ -25,7 +25,7 @@ export function get_stocks(event_id: number, on_completed: (items: UFItem[]) => 
 export function get_stocks_from_my_aws(on_completed: (items: UFItem[]) => void) {
   const url = 'https://u643btk3c7.execute-api.ap-northeast-1.amazonaws.com/default/get-current-all-items';
 
-  axios.post<UFItem[]>(url).then(response => {
+  axios.get<UFItem[]>(url).then(response => {
     const items = response.data;
     on_completed(items);
   });
