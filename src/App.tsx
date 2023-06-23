@@ -17,10 +17,15 @@ interface IAction {
 
 const reducer = (state: UFItem[], action: IAction) => {
   if (action.type === "reset") {
-      return [];
+    return [];
   }
-  const result: UFItem[] = [...state, ...action.value!];
-  return result;
+  else if (action.type === "update") {
+    const result: UFItem[] = [...state, ...action.value!];
+    return result;
+  }
+  else {
+    return []
+  }
 };
 
 function App() {
@@ -29,9 +34,9 @@ function App() {
 
   const update_table = useCallback(() => {
     setUpdateDisabled(true);
-    setItems({type: "reset", value: []});
+    setItems({type: "reset"});
     get_stocks_from_my_aws(newItems => {
-      setItems({type: "", value: newItems});
+      setItems({type: "update", value: newItems});
       setUpdateDisabled(false);
     });
   }, [items]);
